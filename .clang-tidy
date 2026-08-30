@@ -1,0 +1,7 @@
+---
+Checks: -*,clang-analyzer-*,-clang-analyzer-optin.core.EnumCastOutOfRange
+HeaderFilterRegex: ^.*\/libs\/.*$
+WarningsAsErrors: ''
+FormatStyle:     file
+SystemHeaders:   false
+...

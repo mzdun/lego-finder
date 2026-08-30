@@ -1,0 +1,41 @@
+extensions:
+  - proj_flow.ext.cplusplus
+  - proj_flow.ext.sign
+  - proj_flow.ext.store
+  - proj_flow.ext.github
+
+entry:
+  config: [ Conan, CMake ]
+  build: [ Build ]
+  test: [ Build, Test ]
+  verify:
+    - Build
+    - Test
+    - Sign
+    - Pack
+    - SignPackages
+    - Store
+    - BinInst
+    - DevInst
+
+compiler:
+  names:
+    clang: [ clang, clang++ ]
+    gcc: [ gcc, g++ ]
+  os-default: { ubuntu: gcc, windows: msvc }
+
+postproc:
+  exclude:
+    - { github_os: ubuntu-24.04, sanitizer: true }
+
+cmake:
+  vars:
+    LEGO_COVERAGE: "?config:coverage"
+    LEGO_SANITIZE: "?config:sanitizer"
+    LEGO_CUTDOWN_OS: "?runtime:cutdown_os"
+
+shortcuts:
+  dbg: { build_type: Debug, sanitizer: false }
+  rel: { build_type: Release, sanitizer: false }
+  both: { build_type: [ Debug, Release ], sanitizer: false }
+  sane: { build_type: Debug, sanitizer: true }

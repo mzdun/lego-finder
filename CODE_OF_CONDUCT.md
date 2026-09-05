@@ -1,4 +1,4 @@
-# lego's Code of Conduct
+# Brick Finder's Code of Conduct
 
 ## Our Pledge
 

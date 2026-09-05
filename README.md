@@ -1,6 +1,6 @@
-# Lego Finder
+# Brick Finder
 
-Lego Finder to locate instruction page for given brick.
+Brick Finder helps locate instruction page for a given brick.
 
 ## Why
 
@@ -31,7 +31,7 @@ Out of the produced set of images, the actual instructions can be copied to sepa
 With those files set aside, check the color of the BoM boxes and then generate the report with
 
 ```sh
-lego instructions/ -o report/ -c b7d7f3
+brick-finder instructions/ -o report/ -c b7d7f3
 ```
 
 From there, you can lookup the brick image and click on it to get the images of all the pages this brick is on.
@@ -72,7 +72,7 @@ Run the command below to recreate `build/conan` and `build/release` directories.
 
 ### Compilation
 
-Run the command below to build the command line tool under `./build/release/bin/lego`.
+Run the command below to build the command line tool under `./build/release/bin/brick-finder`.
 
 ```sh
 ./flow build --rel

@@ -31,9 +31,9 @@ postproc:
 
 cmake:
   vars:
-    LEGO_COVERAGE: "?config:coverage"
-    LEGO_SANITIZE: "?config:sanitizer"
-    LEGO_CUTDOWN_OS: "?runtime:cutdown_os"
+    BF_COVERAGE: "?config:coverage"
+    BF_SANITIZE: "?config:sanitizer"
+    BF_CUTDOWN_OS: "?runtime:cutdown_os"
 
 shortcuts:
   dbg: { build_type: Debug, sanitizer: false }

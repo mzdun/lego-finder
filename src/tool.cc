@@ -280,11 +280,6 @@ namespace lego {
 			return get_hex(std::string_view{s, 2});
 		}
 
-		uint32_t combine_channels(uint8_t R, uint8_t G, uint8_t B) {
-			auto const format = pyxel::alloc_format();
-			return pyxel::map_rgb(format, R, G, B);
-		}
-
 		uint32_t parse_color(std::string_view view) {
 			if (view.starts_with('#')) {
 				view = view.substr(1);
@@ -295,12 +290,12 @@ namespace lego {
 				auto const g_char = view[1];
 				auto const b_char = view[2];
 
-				return combine_channels(get_hex(r_char, r_char), get_hex(g_char, g_char), get_hex(b_char, b_char));
+				return pyxel::map_rgb(get_hex(r_char, r_char), get_hex(g_char, g_char), get_hex(b_char, b_char));
 			}
 
 			if (view.size() == 6) {
-				return combine_channels(get_hex(view.substr(0, 2)), get_hex(view.substr(2, 2)),
-				                        get_hex(view.substr(4, 2)));
+				return pyxel::map_rgb(get_hex(view.substr(0, 2)), get_hex(view.substr(2, 2)),
+				                      get_hex(view.substr(4, 2)));
 			}
 
 			return 0;

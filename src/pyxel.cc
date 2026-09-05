@@ -3,8 +3,8 @@
 
 module;
 
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_surface.h>
+#include <SDL3/SDL_surface.h>
+#include <SDL3_image/SDL_image.h>
 
 export module lego:pyxel;
 
@@ -17,7 +17,7 @@ export namespace pyxel {
 	};
 
 	struct surface_deleter {
-		void operator()(SDL_Surface* surface) { SDL_FreeSurface(surface); }
+		void operator()(SDL_Surface* surface) { SDL_DestroySurface(surface); }
 	};
 	using surface_ptr = std::unique_ptr<SDL_Surface, surface_deleter>;
 
@@ -25,17 +25,8 @@ export namespace pyxel {
 	surface_ptr make_pixmap(int width, int height) noexcept;
 	void store_pixmap(std::filesystem::path const& path, surface_ptr const& surface) noexcept;
 
-	struct pixel_format_deleter {
-		void operator()(SDL_PixelFormat* format) { SDL_FreeFormat(format); }
-	};
-	using pixel_format_ptr = std::unique_ptr<SDL_PixelFormat, pixel_format_deleter>;
-
-	pixel_format_ptr alloc_format(SDL_PixelFormatEnum format = SDL_PIXELFORMAT_RGBA32) {
-		return pixel_format_ptr{SDL_AllocFormat(format)};
-	}
-
-	uint32_t map_rgb(pixel_format_ptr const& format, uint8_t R, uint8_t G, uint8_t B) {
-		return SDL_MapRGB(format.get(), R, G, B);
+	uint32_t map_rgb(uint8_t R, uint8_t G, uint8_t B, SDL_PixelFormat format = SDL_PIXELFORMAT_RGBA32) {
+		return SDL_MapRGB(SDL_GetPixelFormatDetails(format), nullptr, R, G, B);
 	}
 }  // namespace pyxel
 
@@ -96,33 +87,27 @@ export namespace lego {
 	}
 }  // namespace lego
 
-static constinit auto const IMG_INIT_ALL =
-    IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP | IMG_INIT_JXL | IMG_INIT_AVIF;
-
 namespace pyxel {
 	init_pixmap_loader::init_pixmap_loader() {
-		auto init = SDL_Init(SDL_INIT_EVERYTHING);
-		if (init) {
-			auto const msg = std::format("SDL_Init error {}: {}", init, SDL_GetError());
+		if (!SDL_Init(0)) {
+			auto const msg = std::format("SDL_Init error: {}", SDL_GetError());
 			std::print(std::cerr, "{}\n", msg);
 			throw std::runtime_error(msg);
 		}
-		IMG_Init(IMG_INIT_ALL);
 	}
 
 	init_pixmap_loader::~init_pixmap_loader() {
-		IMG_Quit();
-		SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
+		SDL_QuitSubSystem(0);
 		SDL_Quit();
 	}
 
 	surface_ptr load_pixmap(std::filesystem::path const& path) noexcept {
 		auto orig = surface_ptr{IMG_Load(path.string().c_str())};
-		return surface_ptr{SDL_ConvertSurfaceFormat(orig.get(), SDL_PIXELFORMAT_RGBA32, 0)};
+		return surface_ptr{SDL_ConvertSurface(orig.get(), SDL_PIXELFORMAT_RGBA32)};
 	}
 
 	surface_ptr make_pixmap(int width, int height) noexcept {
-		return surface_ptr{SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA32)};
+		return surface_ptr{SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGBA32)};
 	}
 
 	void store_pixmap(std::filesystem::path const& path, surface_ptr const& surface) noexcept {
@@ -135,7 +120,7 @@ namespace lego {
 		return {
 		    .width = surface->w,
 		    .height = surface->h,
-		    .bytes_per_pixel = surface->format->BytesPerPixel,
+		    .bytes_per_pixel = SDL_GetPixelFormatDetails(surface->format)->bytes_per_pixel,
 		    .pitch = surface->pitch,
 		    .buffer = reinterpret_cast<char*>(surface->pixels),
 		};

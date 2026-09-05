@@ -5,7 +5,7 @@ module;
 
 #include <args/parser.hpp>
 
-export module lego:args;
+export module bricks:args;
 
 import :version;
 import :str;
@@ -20,16 +20,16 @@ namespace args {
 	};
 };  // namespace args
 
-namespace lego {
+namespace bricks {
 	namespace {
 		[[noreturn]] void show_version() {
 			std::print("{} version {}\n", version::program, version::ui);
 			std::exit(0);
 		}  // GCOV_EXCL_LINE[WIN32]
 	}  // namespace
-}  // namespace lego
+}  // namespace bricks
 
-export namespace lego {
+export namespace bricks {
 	struct command_line {
 		std::filesystem::path in{};
 		std::filesystem::path out{};
@@ -42,9 +42,9 @@ export namespace lego {
 		command_line result{};
 
 		args::null_translator tr{};
-		args::parser parser{"Lego Finder", arguments, &tr};
+		args::parser parser{"Brick Finder", arguments, &tr};
 
-		parser.custom(lego::show_version, "v", "version").help("show version and exit").opt();
+		parser.custom(bricks::show_version, "v", "version").help("show version and exit").opt();
 		parser.arg(result.page_count, "n")
 		    .meta("<number>")
 		    .help("sets the number of pages to process; defaults to all pages in directory")
@@ -62,4 +62,4 @@ export namespace lego {
 
 		return result;
 	}
-}  // namespace lego
+}  // namespace bricks

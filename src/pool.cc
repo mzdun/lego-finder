@@ -1,11 +1,11 @@
 // Copyright (c) 2026 Marcin Zdun
 // This code is licensed under MIT license (see LICENSE for details)
 
-export module lego:pool;
+export module bricks:pool;
 
 import std;
 
-export namespace lego {
+export namespace bricks {
 	enum class task {
 		loading,
 		processing,
@@ -13,11 +13,11 @@ export namespace lego {
 	};
 	void post_task(task type, std::function<void()>&& refref);
 	void run_tasks(unsigned int threads = std::thread::hardware_concurrency());
-}  // namespace lego
+}  // namespace bricks
 
 using namespace std::chrono;
 
-namespace lego {
+namespace bricks {
 	struct thread_task {
 		std::function<void()> callback;
 		task type;
@@ -135,4 +135,4 @@ namespace lego {
 			report_end(runtime);
 		}
 	}
-}  // namespace lego
+}  // namespace bricks

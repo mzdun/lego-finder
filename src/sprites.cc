@@ -1,12 +1,12 @@
 // Copyright (c) 2026 Marcin Zdun
 // This code is licensed under MIT license (see LICENSE for details)
 
-export module lego:sprites;
+export module bricks:sprites;
 
 import :pyxel;
 import std;
 
-export namespace lego {
+export namespace bricks {
 	struct sprite_info {
 		backed_surface_t pixels{};
 		uint32_t color{};
@@ -121,9 +121,9 @@ export namespace lego {
 			return result;
 		}
 	};
-}  // namespace lego
+}  // namespace bricks
 
-namespace lego {
+namespace bricks {
 	class block_color_finder {
 	public:
 		void add(uint32_t current) {
@@ -240,4 +240,4 @@ namespace lego {
 		                          [](auto current, auto) { return ((current >> 24) & 0xFF) == 0xFF; }),
 		        .marker = color};
 	}
-}  // namespace lego
+}  // namespace bricks

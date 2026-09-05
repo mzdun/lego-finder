@@ -1,13 +1,13 @@
 // Copyright (c) 2026 Marcin Zdun
 // This code is licensed under MIT license (see LICENSE for details)
 
-export module lego:db;
+export module bricks:db;
 
 import :pyxel;
 import :sprites;
 import std;
 
-export namespace lego {
+export namespace bricks {
 	struct sprite_record {
 		sprite_info key{};
 		std::set<size_t> pages{};
@@ -15,9 +15,9 @@ export namespace lego {
 
 	void add_sprite_infos(std::vector<sprite_info>& result, std::vector<sprite_info>&& sprites);
 	void add_sprite_infos(std::vector<sprite_record>& result, std::vector<sprite_info>&& sprites, size_t page_id);
-}  // namespace lego
+}  // namespace bricks
 
-namespace lego {
+namespace bricks {
 	bool pixels_are_similar(surface_t const& left, surface_t const& right) {
 		if (left.width != right.width || left.height != right.height) {
 			return false;
@@ -126,4 +126,4 @@ namespace lego {
 			result.push_back(sprite_record{.key = std::move(sprite), .pages = {page_id}});
 		}
 	}
-}  // namespace lego
+}  // namespace bricks

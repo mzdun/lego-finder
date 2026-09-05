@@ -1,7 +1,7 @@
 // Copyright (c) 2026 Marcin Zdun
 // This code is licensed under MIT license (see LICENSE for details)
 
-export module lego;
+export module bricks;
 
 import :args;
 import :pyxel;
@@ -11,13 +11,13 @@ import std;
 
 using namespace std::literals;
 
-namespace lego {
+namespace bricks {
 	export int tool(::args::args_view const& arguments);
-}  // namespace lego
+}  // namespace bricks
 
 module :private;
 
-namespace lego {
+namespace bricks {
 	namespace {
 		static constexpr auto ident_digits = 5;
 		static constexpr auto error_while_removing = static_cast<std::uintmax_t>(-1);
@@ -107,7 +107,7 @@ namespace lego {
 					make_directory(dirname);
 
 					write_booklet(dirname);
-					write_index(dirname, "LEGO Reverse Brick search"sv);
+					write_index(dirname, "Reverse Brick search"sv);
 					write_brick_pages();
 					write_yaml();
 				});
@@ -392,4 +392,4 @@ namespace lego {
 
 		return 0;
 	}
-}  // namespace lego
+}  // namespace bricks

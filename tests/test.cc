@@ -4,8 +4,8 @@
 #include <fmt/format.h>
 #include <gtest/gtest.h>
 
-namespace lego::testing {
+namespace bricks::testing {
 
-	TEST(lego, test) { ASSERT_EQ(1, 1); }
+	TEST(bricks, test) { ASSERT_EQ(1, 1); }
 
-}  // namespace lego::testing
+}  // namespace bricks::testing

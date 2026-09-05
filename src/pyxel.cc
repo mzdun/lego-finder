@@ -6,7 +6,7 @@ module;
 #include <SDL3/SDL_surface.h>
 #include <SDL3_image/SDL_image.h>
 
-export module lego:pyxel;
+export module bricks:pyxel;
 
 import std;
 
@@ -30,7 +30,7 @@ export namespace pyxel {
 	}
 }  // namespace pyxel
 
-export namespace lego {
+export namespace bricks {
 	constexpr uint32_t max_rgb_error = 30u;
 
 	struct rect {
@@ -85,7 +85,7 @@ export namespace lego {
 		if (lhs == rhs) return true;
 		return clr_diff(lhs, rhs) <= max_rgb_error;
 	}
-}  // namespace lego
+}  // namespace bricks
 
 namespace pyxel {
 	init_pixmap_loader::init_pixmap_loader() {
@@ -115,7 +115,7 @@ namespace pyxel {
 	}
 }  // namespace pyxel
 
-namespace lego {
+namespace bricks {
 	surface_t to_surface(pyxel::surface_ptr const& surface) {
 		return {
 		    .width = surface->w,
@@ -212,4 +212,4 @@ namespace lego {
 	uint32_t clr_diff(uint32_t lhs, uint32_t rhs, unsigned offset) {
 		return abs_diff((lhs >> offset) & 0xff, (rhs >> offset) & 0xff);
 	}
-}  // namespace lego
+}  // namespace bricks

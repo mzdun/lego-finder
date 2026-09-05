@@ -6,9 +6,9 @@
 // This code is licensed under MIT license (see LICENSE for details)
 // clang-format off
 
-export module lego:version;
+export module bricks:version;
 
-export namespace lego {
+export namespace bricks {
 	struct version {
 		static constexpr char program[] = "@PROJECT_NAME@";
 		static constexpr char string[] = "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@";  // NOLINT build/include_what_you_use and whitespace/line_length
@@ -21,6 +21,6 @@ export namespace lego {
 		static constexpr unsigned minor = @PROJECT_VERSION_MINOR@;
 		static constexpr unsigned patch = @PROJECT_VERSION_PATCH@;
 	};
-}  // namespace lego
+}  // namespace bricks
 
 // clang-format on

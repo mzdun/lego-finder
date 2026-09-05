@@ -8,7 +8,7 @@
 #include <tchar.h>
 #endif
 
-namespace lego {
+namespace bricks {
 	extern int tool(::args::args_view const&);
 }
 
@@ -38,8 +38,8 @@ int _tmain(int argc, wchar_t* argv[]) {
 
 	SetConsoleOutputCP(CP_UTF8);
 
-	return lego::tool(::args::from_main(static_cast<int>(args.size() - 1), args.data()));
+	return bricks::tool(::args::from_main(static_cast<int>(args.size() - 1), args.data()));
 }
 #else
-int main(int argc, char* argv[]) { return lego::tool(args::from_main(argc, argv)); }
+int main(int argc, char* argv[]) { return bricks::tool(args::from_main(argc, argv)); }
 #endif

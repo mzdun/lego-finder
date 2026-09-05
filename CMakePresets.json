@@ -1,8 +1,8 @@
 {
     "version": 6,
     "cmakeMinimumRequired": {
-        "major": 3,
-        "minor": 23,
+        "major": 4,
+        "minor": 0,
         "patch": 0
     },
     "configurePresets": [
@@ -69,7 +69,7 @@
         {
             "name": "msbuild-base",
             "hidden": true,
-            "generator": "Visual Studio 17 2022",
+            "generator": "Visual Studio 18 2026",
             "architecture": "x64"
         },
         {

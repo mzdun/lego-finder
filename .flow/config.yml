@@ -3,11 +3,12 @@ extensions:
   - proj_flow.ext.sign
   - proj_flow.ext.store
   - proj_flow.ext.github
+  - proj_flow.ext.tools
 
 entry:
-  config: [ Conan, CMake ]
-  build: [ Build ]
-  test: [ Build, Test ]
+  config: [Conan, CMake]
+  build: [Build]
+  test: [Build, Test]
   verify:
     - Build
     - Test
@@ -20,8 +21,8 @@ entry:
 
 compiler:
   names:
-    clang: [ clang, clang++ ]
-    gcc: [ gcc, g++ ]
+    clang: [clang, clang++]
+    gcc: [gcc, g++]
   os-default: { ubuntu: gcc, windows: msvc }
 
 postproc:
@@ -37,5 +38,5 @@ cmake:
 shortcuts:
   dbg: { build_type: Debug, sanitizer: false }
   rel: { build_type: Release, sanitizer: false }
-  both: { build_type: [ Debug, Release ], sanitizer: false }
+  both: { build_type: [Debug, Release], sanitizer: false }
   sane: { build_type: Debug, sanitizer: true }

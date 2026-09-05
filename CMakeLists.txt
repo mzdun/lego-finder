@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Marcin Zdun
 # This file is licensed under MIT license (see LICENSE for details)
 
-cmake_minimum_required (VERSION 3.28)
+cmake_minimum_required (VERSION 4.0)
 project (lego
   VERSION 0.1.0
   DESCRIPTION "Lego Finder"
@@ -35,8 +35,8 @@ find_package(Python3 COMPONENTS Interpreter REQUIRED)
 find_package(fmt REQUIRED)
 find_package(GTest REQUIRED)
 find_package(mbits-args REQUIRED)
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
+find_package(SDL3 REQUIRED)
+find_package(SDL3_image REQUIRED)
 
 if (LEGO_TESTING)
   enable_testing()
@@ -167,7 +167,7 @@ target_include_directories(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_BINARY_DIR}/src
 )
-target_link_libraries(${PROJECT_NAME} fmt::fmt mbits::args SDL2::SDL2 SDL2_image::SDL2_image)
+target_link_libraries(${PROJECT_NAME} fmt::fmt mbits::args SDL3::SDL3 SDL3_image::SDL3_image)
 set_target_properties(${PROJECT_NAME} PROPERTIES
   VERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )

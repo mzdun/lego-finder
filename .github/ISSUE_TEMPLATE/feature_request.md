@@ -5,9 +5,9 @@ about: Suggest an idea for this project
 
 <!--
 
-Have you read lego's Code of Conduct? By filing an Issue, you are
+Have you read Brick Finder's Code of Conduct? By filing an Issue, you are
 expected to comply with it, including treating everyone with respect:
-https://github.com/mbits-libs/lego/blob/master/CODE_OF_CONDUCT.md
+https://github.com/mzdun/brick-finder/blob/master/CODE_OF_CONDUCT.md
 
 -->
 

@@ -1,1 +1,1 @@
-set(CPACK_PACKAGE_NAME "lego")
+set(CPACK_PACKAGE_NAME "brick-finder")

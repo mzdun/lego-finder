@@ -2,9 +2,9 @@
 # This file is licensed under MIT license (see LICENSE for details)
 
 cmake_minimum_required (VERSION 4.0)
-project (lego
+project (brick-finder
   VERSION 0.1.0
-  DESCRIPTION "Lego Finder"
+  DESCRIPTION "Brick Finder"
   LANGUAGES CXX)
 
 set(PROJECT_VERSION_SHORT "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
@@ -12,12 +12,12 @@ set(PROJECT_VERSION_STABILITY "" # or "-alpha", or "-beta", or "-rc.1", or "-rc.
     CACHE STRING "" FORCE)
 
 if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
-  message(FATAL_ERROR "Building in source firectory is not supported")
+  message(FATAL_ERROR "Building in source directory is not supported")
 endif()
 
-set(LEGO_TESTING ON CACHE BOOL "Compile and/or run self-tests")
-set(LEGO_INSTALL ON CACHE BOOL "Install the application")
-set(LEGO_SANITIZE OFF CACHE BOOL "Compile with sanitizers enabled")
+set(BF_TESTING ON CACHE BOOL "Compile and/or run self-tests")
+set(BF_INSTALL ON CACHE BOOL "Install the application")
+set(BF_SANITIZE OFF CACHE BOOL "Compile with sanitizers enabled")
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -38,14 +38,14 @@ find_package(mbits-args REQUIRED)
 find_package(SDL3 REQUIRED)
 find_package(SDL3_image REQUIRED)
 
-if (LEGO_TESTING)
+if (BF_TESTING)
   enable_testing()
 
   find_package(GTest REQUIRED)
 
   set(TEST_REPORT_DIR "${PROJECT_BINARY_DIR}/test-results")
   set(TEST_SANITIZER_TAG "")
-  if (LEGO_SANITIZE)
+  if (BF_SANITIZE)
     set(TEST_SANITIZER_TAG "-sanitizer")
   endif()
   set(TEST_REPORT_FILE "${CMAKE_SYSTEM_NAME}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_BUILD_TYPE}${TEST_SANITIZER_TAG}.xml")
@@ -57,7 +57,7 @@ old_conan_output_dirs_setup()
 # See <https://github.com/lefticus/cppbestpractices/blob/v1.0.0/02-Use_the_Tools_Available.md#compilers>
 
 if (MSVC)
-  set(LEGO_ADDITIONAL_COMPILE_FLAGS
+  set(BF_ADDITIONAL_COMPILE_FLAGS
     /D_CRT_SECURE_NO_WARNINGS
     /D_CRT_NONSTDC_NO_WARNINGS
     /utf-8
@@ -84,15 +84,15 @@ if (MSVC)
     /w14906
     /w14928
     /w14946)
-  if (LEGO_SANITIZE)
-    list(APPEND LEGO_ADDITIONAL_COMPILE_FLAGS
+  if (BF_SANITIZE)
+    list(APPEND BF_ADDITIONAL_COMPILE_FLAGS
       /fsanitize=address
       /D_DISABLE_VECTOR_ANNOTATION
       /D_DISABLE_STRING_ANNOTATION
     )
   endif()
 else()
-  set(LEGO_ADDITIONAL_COMPILE_FLAGS
+  set(BF_ADDITIONAL_COMPILE_FLAGS
       -Wall -Wextra
       -Wnon-virtual-dtor
       -Wold-style-cast
@@ -107,13 +107,13 @@ else()
       -Wformat=2
   )
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    list(APPEND LEGO_ADDITIONAL_COMPILE_FLAGS
+    list(APPEND BF_ADDITIONAL_COMPILE_FLAGS
       -fcolor-diagnostics
       -Wno-braced-scalar-init
     # -Wlifetime
     )
   else()
-    list(APPEND LEGO_ADDITIONAL_COMPILE_FLAGS
+    list(APPEND BF_ADDITIONAL_COMPILE_FLAGS
       -fdiagnostics-color
       -Wmisleading-indentation
       -Wduplicated-cond
@@ -122,13 +122,13 @@ else()
       -Wuseless-cast
       )
   endif()
-  if (LEGO_SANITIZE)
-    list(APPEND LEGO_ADDITIONAL_COMPILE_FLAGS
+  if (BF_SANITIZE)
+    list(APPEND BF_ADDITIONAL_COMPILE_FLAGS
       -fsanitize=address
       -fsanitize=undefined
 
     )
-    list(APPEND LEGO_ADDITIONAL_LINK_FLAGS
+    list(APPEND BF_ADDITIONAL_LINK_FLAGS
       -fsanitize=address
       -fsanitize=undefined
     )
@@ -138,7 +138,7 @@ endif()
 include(${PROJECT_SOURCE_DIR}/.flow/packages/config.cmake)
 include(CPack)
 
-configure_file(src/version.in.hh include/lego/version.hh @ONLY)
+configure_file(src/version.in.hh include/bricks/version.hh @ONLY)
 configure_file(src/version.in.cc src/version.cc @ONLY)
 
 set(SRCS
@@ -151,14 +151,14 @@ set(SRCS
   src/sprites.cc
   src/tool.cc
   "${CMAKE_CURRENT_BINARY_DIR}/src/version.cc"
-  "${CMAKE_CURRENT_BINARY_DIR}/include/lego/version.hh"
+  "${CMAKE_CURRENT_BINARY_DIR}/include/bricks/version.hh"
 )
 
 add_executable(${PROJECT_NAME} ${SRCS})
 
 add_win32_icon(${PROJECT_NAME} "appicon.ico")
-target_compile_options(${PROJECT_NAME} PRIVATE ${LEGO_ADDITIONAL_COMPILE_FLAGS})
-target_link_options(${PROJECT_NAME} PUBLIC ${LEGO_ADDITIONAL_LINK_FLAGS})
+target_compile_options(${PROJECT_NAME} PRIVATE ${BF_ADDITIONAL_COMPILE_FLAGS})
+target_link_options(${PROJECT_NAME} PUBLIC ${BF_ADDITIONAL_LINK_FLAGS})
 target_include_directories(${PROJECT_NAME}
   PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -181,7 +181,7 @@ endif()
 ##  INSTALL
 ##################################################################
 
-if (LEGO_INSTALL)
+if (BF_INSTALL)
   install(TARGETS ${PROJECT_NAME})
 endif()
 
@@ -189,7 +189,7 @@ endif()
 ##  TESTING
 ##################################################################
 
-if (LEGO_TESTING)
+if (BF_TESTING)
   file(GLOB EXCLUDES_TEST_SRCS_CC tests/*.cc)
   file(GLOB EXCLUDES_TEST_SRCS_CPP tests/*.cpp)
   file(GLOB EXCLUDES_TEST_SRCS_CXX tests/*.cxx)

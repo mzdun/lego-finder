@@ -2,8 +2,8 @@ function(add_project_test TARGET)
   cmake_parse_arguments(PARSE_ARGV 1 TST "" "" "")
   add_executable(${TARGET}-test ${TST_UNPARSED_ARGUMENTS})
   set_target_properties(${TARGET}-test PROPERTIES FOLDER tests)
-  target_compile_options(${TARGET}-test PRIVATE ${LEGO_ADDITIONAL_COMPILE_FLAGS})
-  target_link_options(${TARGET}-test PRIVATE ${LEGO_ADDITIONAL_LINK_FLAGS})
+  target_compile_options(${TARGET}-test PRIVATE ${BF_ADDITIONAL_COMPILE_FLAGS})
+  target_link_options(${TARGET}-test PRIVATE ${BF_ADDITIONAL_LINK_FLAGS})
   target_include_directories(${TARGET}-test
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/tests

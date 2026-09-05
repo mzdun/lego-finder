@@ -49,11 +49,11 @@ jobs:
           IGNORE_GENERATED_FILES: true
           FILTER_REGEX_INCLUDE: ".*/libs/.*|.*/apps/.*|.*/tools/[^/]+\\.py"
           FILTER_REGEX_EXCLUDE: ".*/build/.*|\
-                                 .*/external/.*|\
-                                 .*/tools/.*"
+            .*/external/.*|\
+            .*/tools/.*"
 
       - name: Lint with clang-format
-        uses: DoozyX/clang-format-lint-action@v0.17
+        uses: DoozyX/clang-format-lint-action@v0.20
         with:
-            exclude: ./build ./external ./tools
-            clangFormatVersion: 17
+          exclude: ./build ./external ./tools
+          clangFormatVersion: 19

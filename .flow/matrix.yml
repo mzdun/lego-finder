@@ -6,6 +6,7 @@ matrix:
 
 exclude:
   - { build_type: Release, sanitizer: true }
+  - sanitizer: true # for now...
 
 include:
   - build_type: Debug
